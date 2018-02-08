@@ -42,6 +42,16 @@ return [
     |
     */
 
-    'show_all_errors' => false
+    'show_all_errors' => false,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Icon prefix
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the icon prefix, defaulted to Font Awesome.
+    |
+    */
+
+    'icon_prefix' => 'fa fa-'
 ];

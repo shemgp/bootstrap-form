@@ -9,9 +9,12 @@ use Illuminate\Session\SessionManager as Session;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Traits\Macroable;
 
 class BootstrapForm
 {
+    use Macroable;
+    
     /**
      * Illuminate HtmlBuilder instance.
      *
@@ -60,6 +63,13 @@ class BootstrapForm
      * @var string
      */
     protected $rightColumnClass;
+
+    /**
+     * The icon prefix.
+     *
+     * @var string
+     */
+    protected $iconPrefix;
 
     /**
      * The errorbag that is used for validation (multiple forms)
@@ -625,20 +635,20 @@ class BootstrapForm
 
         $optionsField = $this->getFieldOptions(array_except($options, ['suffix', 'prefix']), $name);
 
-        if(isset($options['prefix']) || isset($options['suffix'])) {
-            $this->config->set('bootstrap_form.right_column_class', $this->config->get('bootstrap_form.right_column_class'). ' input-group');
-        }
-
         $inputElement = '';
 
-        if(isset($options['prefix'])) {
+         if(isset($options['prefix'])) {
             $inputElement = $options['prefix'];
         }
 
         $inputElement .= $type === 'password' ? $this->form->password($name, $optionsField) : $this->form->{$type}($name, $value, $optionsField);
 
-        if(isset($options['suffix'])) {
+         if(isset($options['suffix'])) {
             $inputElement .= $options['suffix'];
+        }
+
+         if(isset($options['prefix']) || isset($options['suffix'])) {
+            $inputElement = '<div class="input-group">' . $inputElement . '</div>';
         }
 
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
@@ -686,7 +696,9 @@ class BootstrapForm
      */
     public function addonIcon($icon, $options = [])
     {
-        return '<div class="input-group-addon"><span ' . $this->html->attributes($options) . '><i class="fa fa-'.$icon.'"></i></span></div>';
+        $prefix = array_get($options, 'prefix', $this->getIconPrefix());
+
+        return '<div class="input-group-addon"><span ' . $this->html->attributes($options) . '><i class="'.$prefix.$icon.'"></i></span></div>';
     }
 
     /**
@@ -951,6 +963,16 @@ class BootstrapForm
     public function setRightColumnClass($class)
     {
         $this->rightColumnClass = $class;
+    }
+
+    /**
+     * Get the icon prefix.
+     *
+     * @return string
+     */
+    public function getIconPrefix()
+    {
+        return $this->iconPrefix ?: $this->config->get('bootstrap_form.icon_prefix', 'fa fa-');
     }
 
     /**
