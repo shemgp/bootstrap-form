@@ -53,5 +53,29 @@ return [
     |
     */
 
-    'icon_prefix' => 'fa fa-'
+    'icon_prefix' => 'fa fa-',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default error bag
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default error bag to retrieve form errors from.
+    | If there is not a default error bag, set it to null.
+    |
+    */
+
+    'error_bag' => 'default',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Error class
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the error class.
+    |
+    */
+
+    'error_class' => 'has-error'
+
 ];

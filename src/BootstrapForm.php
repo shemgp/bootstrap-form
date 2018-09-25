@@ -2,19 +2,19 @@
 
 namespace Watson\BootstrapForm;
 
+use Illuminate\Support\Str;
 use Collective\Html\FormBuilder;
 use Collective\Html\HtmlBuilder;
-use Illuminate\Contracts\Config\Repository as Config;
-use Illuminate\Session\SessionManager as Session;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Traits\Macroable;
+use Illuminate\Session\SessionManager as Session;
+use Illuminate\Contracts\Config\Repository as Config;
 
 class BootstrapForm
 {
     use Macroable;
-    
+
     /**
      * Illuminate HtmlBuilder instance.
      *
@@ -72,11 +72,19 @@ class BootstrapForm
     protected $iconPrefix;
 
     /**
-     * The errorbag that is used for validation (multiple forms)
+     * The errorbag that is used for validation (multiple forms).
      *
      * @var string
      */
-    protected $errorBag = 'default';
+    protected $errorBag;
+
+    /**
+     * The error class.
+     *
+     * @var string
+     */
+    protected $errorClass;
+
 
     /**
      * Construct the class.
@@ -737,6 +745,18 @@ class BootstrapForm
         return $this->getFormGroup($name, $label, $wrapperElement);
     }
 
+
+    /**
+     * Wrap the content in Laravel's HTML string class.
+     *
+     * @param  string  $html
+     * @return \Illuminate\Support\HtmlString
+     */
+    protected function toHtmlString($html)
+    {
+        return new HtmlString($html);
+    }
+
     /**
      * Get the label title for a form field, first by using the provided one
      * or titleizing the field name.
@@ -763,13 +783,13 @@ class BootstrapForm
      *
      * @param  string  $name
      * @param  string  $element
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     protected function getFormGroupWithoutLabel($name, $element)
     {
         $options = $this->getFormGroupOptions($name);
 
-        return '<div' . $this->html->attributes($options) . '>' . $element . '</div>';
+        return $this->toHtmlString('<div' . $this->html->attributes($options) . '>' . $element . '</div>');
     }
 
     /**
@@ -778,13 +798,13 @@ class BootstrapForm
      * @param  string  $name
      * @param  string  $value
      * @param  string  $element
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     protected function getFormGroupWithLabel($name, $value, $element)
     {
         $options = $this->getFormGroupOptions($name);
 
-        return '<div' . $this->html->attributes($options) . '>' . $this->label($name, $value) . $element . '</div>';
+        return $this->toHtmlString('<div' . $this->html->attributes($options) . '>' . $this->label($name, $value) . $element . '</div>');
     }
 
     /**
@@ -972,7 +992,17 @@ class BootstrapForm
      */
     public function getIconPrefix()
     {
-        return $this->iconPrefix ?: $this->config->get('bootstrap_form.icon_prefix', 'fa fa-');
+        return $this->iconPrefix ?: $this->config->get('bootstrap_form.icon_prefix');
+    }
+
+     /**
+     * Get the error class.
+     *
+     * @return string
+     */
+    public function getErrorClass()
+    {
+        return $this->errorClass ?: $this->config->get('bootstrap_form.error_class');
     }
 
     /**
@@ -982,7 +1012,7 @@ class BootstrapForm
      */
     protected function getErrorBag()
     {
-        return $this->errorBag;
+        return $this->errorBag ?: $this->config->get('bootstrap_form.error_bag');
     }
 
     /**
@@ -1038,7 +1068,11 @@ class BootstrapForm
         if ($this->getErrors()) {
             $allErrors = $this->config->get('bootstrap_form.show_all_errors');
 
-            $errorBag = $this->getErrors()->{$this->getErrorBag()};
+            if ($this->getErrorBag()) {
+                $errorBag = $this->getErrors()->{$this->getErrorBag()};
+            } else {
+                $errorBag = $this->getErrors();
+            }
 
             if ($allErrors) {
                 return implode('', $errorBag->get($field, $format));
@@ -1056,9 +1090,9 @@ class BootstrapForm
      * @param  string  $class
      * @return string
      */
-    protected function getFieldErrorClass($field, $class = 'has-error')
+    protected function getFieldErrorClass($field)
     {
-        return $this->getFieldError($field) ? $class : null;
+        return $this->getFieldError($field) ? $this->getErrorClass() : null;
     }
 
     /**
@@ -1066,12 +1100,12 @@ class BootstrapForm
      *
      * @param  string  $field
      * @param  array   $options
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     protected function getHelpText($field, array $options = [])
     {
         if (array_key_exists('help_text', $options)) {
-            return '<span class="help-block">' . e($options['help_text']) . '</span>';
+            return $this->toHtmlString('<span class="help-block">' . e($options['help_text']) . '</span>');
         }
 
         return '';
