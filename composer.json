@@ -1,5 +1,5 @@
 {
-    "name": "watson/bootstrap-form",
+    "name": "kubernesis/bootstrap-form",
     "description": "Laravel 5 form wrappers for Bootstrap 3.",
     "keywords": ["laravel", "form", "bootstrap"],
     "license": "MIT",
@@ -7,6 +7,14 @@
         {
             "name": "Dwight Watson",
             "email": "dwightwatson@me.com"
+        },
+        {
+            "name": "Glenson Carlo Galupo",
+            "email": "glenson@aiias.edu"
+        },
+        {
+            "name": "Shem Pasamba",
+            "email": "shemgp@aiias.edu"
         }
     ],
     "require": {
