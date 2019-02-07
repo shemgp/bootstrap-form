@@ -102,6 +102,17 @@ class BootstrapForm
     }
 
     /**
+     * Check if the user that is logged in has the access to the form
+     *
+     * @param  string  $elementId
+     * @return boolean
+     */
+
+    public function isAllowed($elementId){
+        return true;
+    }
+
+    /**
      * Open a form while passing a model and the routes for storing or updating
      * the model. This will set the correct route along with the correct
      * method.
@@ -111,6 +122,9 @@ class BootstrapForm
      */
     public function open(array $options = [])
     {
+        if(isset($options['form_name']))
+            $this->form_name = $options['form_name'];
+
         // Set the HTML5 role.
         $options['role'] = 'form';
 
@@ -218,7 +232,7 @@ class BootstrapForm
     public function vertical(array $options = [])
     {
         $this->setType(Type::VERTICAL);
-
+        $options = array_merge($options, ['class' => "form-vertical"]);
         return $this->open($options);    }
 
     /**
@@ -230,7 +244,7 @@ class BootstrapForm
     public function inline(array $options = [])
     {
         $this->setType(Type::INLINE);
-
+        $options = array_merge($options, ['class' => "form-inline"]);
         return $this->open($options);
     }
 
@@ -243,7 +257,7 @@ class BootstrapForm
     public function horizontal(array $options = [])
     {
         $this->setType(Type::HORIZONTAL);
-
+        $options = array_merge($options, ['class' => "form-horizontal"]);
         return $this->open($options);
     }
 
@@ -258,6 +272,10 @@ class BootstrapForm
      */
     public function staticField($name, $label = null, $value = null, array $options = [])
     {
+
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+
         $options = array_merge(['class' => 'form-control-static'], $options);
 
         if (is_array($value) and isset($value['html'])) {
@@ -272,7 +290,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->getFormGroup($name, $label, $wrapperElement);
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
     }
 
     /**
@@ -286,7 +304,9 @@ class BootstrapForm
      */
     public function text($name, $label = null, $value = null, array $options = [])
     {
-        return $this->input('text', $name, $label, $value, $options);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        return $this->isAllowed($name) ? $this->input('text', $name, $label, $value, $options) : "";
     }
 
     /**
@@ -300,7 +320,9 @@ class BootstrapForm
      */
     public function email($name = 'email', $label = null, $value = null, array $options = [])
     {
-        return $this->input('email', $name, $label, $value, $options);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        return $this->isAllowed($name) ? $this->input('email', $name, $label, $value, $options) : ""; 
     }
 
     /**
@@ -314,7 +336,9 @@ class BootstrapForm
      */
     public function url($name, $label = null, $value = null, array $options = [])
     {
-        return $this->input('url', $name, $label, $value, $options);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        return $this->isAllowed($name) ? $this->input('url', $name, $label, $value, $options) : ""; 
     }
 
     /**
@@ -328,7 +352,10 @@ class BootstrapForm
      */
     public function tel($name, $label = null, $value = null, array $options = [])
     {
-        return $this->input('tel', $name, $label, $value, $options);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+
+        return $this->isAllowed($name) ? $this->input('tel', $name, $label, $value, $options) : ""; 
     }
 
     /**
@@ -342,7 +369,10 @@ class BootstrapForm
      */
     public function number($name, $label = null, $value = null, array $options = [])
     {
-        return $this->input('number', $name, $label, $value, $options);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+
+        return $this->isAllowed($name) ? $this->input('number', $name, $label, $value, $options) : ""; 
     }
 
     /**
@@ -356,7 +386,10 @@ class BootstrapForm
      */
     public function date($name, $label = null, $value = null, array $options = [])
     {
-        return $this->input('date', $name, $label, $value, $options);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+
+        return $this->isAllowed($name) ? $this->input('date', $name, $label, $value, $options) : ""; 
     }
 
      /**
@@ -370,7 +403,9 @@ class BootstrapForm
      */
     public function time($name, $label = null, $value = null, array $options = [])
     {
-        return $this->input('time', $name, $label, $value, $options);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        return $this->isAllowed($name) ? $this->input('time', $name, $label, $value, $options) : ""; 
     }
 
     /**
@@ -384,7 +419,9 @@ class BootstrapForm
      */
     public function textarea($name, $label = null, $value = null, array $options = [])
     {
-        return $this->input('textarea', $name, $label, $value, $options);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        return $this->isAllowed($name) ? $this->input('textarea', $name, $label, $value, $options) : ""; 
     }
 
     /**
@@ -397,7 +434,9 @@ class BootstrapForm
      */
     public function password($name = 'password', $label = null, array $options = [])
     {
-        return $this->input('password', $name, $label, null, $options);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        return $this->isAllowed($name) ? $this->input('password', $name, $label, null, $options) : ""; 
     }
 
     /**
@@ -412,12 +451,14 @@ class BootstrapForm
      */
     public function checkbox($name, $label = null, $value = 1, $checked = null, array $options = [])
     {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
         $inputElement = $this->checkboxElement($name, $label, $value, $checked, false, $options);
 
         $wrapperOptions = $this->isHorizontal() ? ['class' => implode(' ', [$this->getLeftColumnOffsetClass(), $this->getRightColumnClass()])] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->getFormGroup($name, null, $wrapperElement);
+        return $this->isAllowed($name) ? $this->getFormGroup($name, null, $wrapperElement) : ""; 
     }
 
     /**
@@ -437,9 +478,9 @@ class BootstrapForm
 
         $labelOptions = $inline ? ['class' => 'checkbox-inline'] : [];
         $inputElement = $this->form->checkbox($name, $value, $checked, $options);
-        $labelElement = '<label ' . $this->html->attributes($labelOptions) . '>' . $inputElement . $label . '</label>';
+        $labelElement = '<label ' . $this->html->attributes($labelOptions) . '>' . $inputElement . '<span class="label-text">'. $label . '</span></label>';
 
-        return $inline ? $labelElement : '<div class="checkbox">' . $labelElement . '</div>';
+        return $inline ? $labelElement : '<div class="checkbox animated-checkbox">' . $labelElement . '</div>';
     }
 
     /**
@@ -455,6 +496,9 @@ class BootstrapForm
      */
     public function checkboxes($name, $label = null, $choices = [], $checkedValues = [], $inline = false, array $options = [])
     {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+
         $elements = '';
 
         foreach ($choices as $value => $choiceLabel) {
@@ -466,7 +510,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $elements . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->getFormGroup($name, $label, $wrapperElement);
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
     /**
@@ -481,12 +525,15 @@ class BootstrapForm
      */
     public function radio($name, $label = null, $value = null, $checked = null, array $options = [])
     {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+
         $inputElement = $this->radioElement($name, $label, $value, $checked, false, $options);
 
         $wrapperOptions = $this->isHorizontal() ? ['class' => implode(' ', [$this->getLeftColumnOffsetClass(), $this->getRightColumnClass()])] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . '</div>';
 
-        return $this->getFormGroup(null, $label, $wrapperElement);
+        return $this->isAllowed($name) ? $this->getFormGroup(null, $label, $wrapperElement) : ""; 
     }
 
     /**
@@ -509,7 +556,7 @@ class BootstrapForm
         $labelOptions = $inline ? ['class' => 'radio-inline'] : [];
 
         $inputElement = $this->form->radio($name, $value, $checked, $options);
-        $labelElement = '<label ' . $this->html->attributes($labelOptions) . '>' . $inputElement . $label . '</label>';
+        $labelElement = '<label ' . $this->html->attributes($labelOptions) . '>' . $inputElement .'<span class="label-text">'. $label .'</span> </label>';
 
         return $inline ? $labelElement : '<div class="radio">' . $labelElement . '</div>';
     }
@@ -527,6 +574,8 @@ class BootstrapForm
      */
     public function radios($name, $label = null, $choices = [], $checkedValue = null, $inline = false, array $options = [])
     {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
         $elements = '';
 
         foreach ($choices as $value => $choiceLabel) {
@@ -536,9 +585,9 @@ class BootstrapForm
         }
 
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
-        $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $elements . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
+        $wrapperElement = '<div class="animated-radio-button"' . $this->html->attributes($wrapperOptions) . '>' . $elements . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->getFormGroup($name, $label, $wrapperElement);
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
     }
 
     /**
@@ -575,6 +624,9 @@ class BootstrapForm
      */
     public function submit($value = null, array $options = [])
     {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+
         $options = array_merge(['class' => 'btn btn-primary'], $options);
 
         $inputElement = $this->form->submit($value, $options);
@@ -582,7 +634,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => implode(' ', [$this->getLeftColumnOffsetClass(), $this->getRightColumnClass()])] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>'. $inputElement . '</div>';
 
-        return $this->getFormGroup(null, null, $wrapperElement);
+        return $this->isAllowed($name) ? $this->getFormGroup(null, null, $wrapperElement) : ""; 
     }
 
     /**
@@ -594,6 +646,9 @@ class BootstrapForm
      */
     public function button($value = null, array $options = [])
     {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+
         $options = array_merge(['class' => 'btn btn-primary'], $options);
 
         $inputElement = $this->form->button($value, $options);
@@ -601,7 +656,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => implode(' ', [$this->getLeftColumnOffsetClass(), $this->getRightColumnClass()])] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>'. $inputElement . '</div>';
 
-        return $this->getFormGroup(null, null, $wrapperElement);
+        return $this->isAllowed($name) ? $this->getFormGroup(null, null, $wrapperElement) : ""; 
     }
 
     /**
@@ -614,6 +669,9 @@ class BootstrapForm
      */
     public function file($name, $label = null, array $options = [])
     {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+
         $label = $this->getLabelTitle($label, $name);
 
         $options = array_merge(['class' => 'filestyle', 'data-buttonBefore' => 'true'], $options);
@@ -624,7 +682,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->getFormGroup($name, $label, $wrapperElement);
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
     }
 
     /**
@@ -734,6 +792,8 @@ class BootstrapForm
      */
     public function select($name, $label = null, $list = [], $selected = null, array $options = [])
     {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
         $label = $this->getLabelTitle($label, $name);
 
         $options = $this->getFieldOptions($options, $name);
@@ -742,9 +802,8 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->getFormGroup($name, $label, $wrapperElement);
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
     }
-
 
     /**
      * Wrap the content in Laravel's HTML string class.
@@ -1110,4 +1169,159 @@ class BootstrapForm
 
         return '';
     }
+
+
+    // New form elements for Kubernesis
+
+    // 1 item selection
+    public function selectize($name, $label = null, $list = [], $selected = null, array $options = []) {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        $options = $this->getFieldOptions($options, $name);
+        if($this->form->getModel() != NULL)
+            $selected = $this->form->getModel()->{$name};
+        $inputElement = $this->form->select($name, $list, $selected, $options);
+        $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
+        $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
+        $wrapperElement .= '
+        <script>
+            $(function() {
+                $("#'.$name.'").selectize({
+                    maxItems: 1
+                });
+            })
+        </script>
+        ';
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+    }
+
+    // can have multiple selection
+    public function selectizeMany($name, $label = null, $list = [], $selected = [], array $options = []) {
+        $jsname = str_replace("-","",$name);
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        $options = $this->getFieldOptions($options, $name."[]");
+        $inputElement = $this->form->select($name."[]", $list, $selected, $options);
+        $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
+        $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name."[]") . $this->getHelpText($name."[]", $options) . '</div>';
+        $wrapperElement .= '
+            <script type="text/javascript">
+            $(function() {
+                var '.$jsname.' = $("#'.$name.'").selectize({
+                    allowEmptyOption: true,
+                    persist: false,
+                    maxItems: null
+                });
+                '.$jsname.'[0].selectize.clear();
+                '.$jsname.'[0].selectize.setValue(["'.implode('", "',$selected).'"]);
+            })
+            </script>
+        ';
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+    }
+
+    // list is from route
+    public function selectizeAjax($name, $label = null, $route, $selected = [], array $options = []) {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        $options = $this->getFieldOptions($options, $name);
+        if($this->form->getModel() != NULL)
+            $selected = $this->form->getModel()->{$name};
+        $inputElement = $this->form->select($name."[]", [], $selected, $options);
+        $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
+        $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
+        $wrapperElement .= '
+            <script>
+            $(function() {
+                $("#'.$name.'").selectize({
+                    valueField: "id",
+                    labelField: "name",
+                    searchField: "name",
+                    options: [],
+                    persist: false,
+                    loadThrottle: 600,
+                    create: false,
+                    allowEmptyOption: false,
+                    maxItems: 1,
+                    render: {
+                        item: function(item, escape) {
+                            return "<li>" +
+                                (item.name ? "<span>" + escape(item.name) + "</span>" : "") +
+                            "</li>";
+                        },
+                        option: function(item, escape) {
+                            var label = item.name;
+                            return "<li style=\"display:block; padding-left:10px;\">" + escape(label) + "</li>";
+                        }
+                    },
+                    load: function(query, callback) {
+                        if (!query.length) return callback();
+                        $.ajax({
+                            url: "'. $route .'/"+encodeURIComponent(query),
+                            type: "GET",
+                            dataType: "json",
+                            error: function() {
+                                callback();
+                            },
+                            success: function(res) {
+                                callback(res);
+                            }
+                        });
+                    },
+                    onInitializeValue: function () {
+                        $(this)[0].onSearchChange("'.($selected[0]??null).'");
+                    }
+                });
+            })
+            </script>
+        ';
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+    }
+
+    public function toggle($name, $label = null, $value = null, $options = [], $setting = [ 'off' => 'Off', 'on' => 'On']) {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        $optionsField = $this->getFieldOptions(array_except($options, ['suffix', 'prefix']), $name);
+        $label = $this->getLabelTitle($label, $name);
+        $valueON =  '$("#'.$name.'").prop("checked")';
+        $valueOFF = '$("#'.$name.'").removeProp("checked")';
+        $disabled = '$("#'.$name.'").attr("disabled", "disabled")';
+        $wrapperElement = '<br/><input '.$this->html->attributes($optionsField).' name="'.$name.'" type="checkbox" >
+        <script>
+        $(function() {
+            $("#'.$name.'").bootstrapToggle({
+                on: "'.$setting['on'].'",
+                off: "'.$setting['off'].'"
+            });
+            $("#'.$name.'").bootstrapToggle("'.strtolower($value) .'");
+            '. (strtolower($value) == 'on' ? $valueON : $valueOFF ) .'
+            '.(isset($setting['disabled']) && $setting['disabled'] == 'disabled' ?$disabled : '') .'
+        })
+        </script>';
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+    }
+
+    public function toggleFlip($name, $label = null, $value = null, $options = [], $setting = [ 'off' => 'Off', 'on' => 'On']) {
+        unset($options['id']);
+        $options = array_merge($options, ['id' => $name]);
+        $optionsField = $this->getFieldOptions(array_except($options, ['suffix', 'prefix']), $name);
+        $label = $this->getLabelTitle($label, $name);
+        $valueON =  '$("#'.$name.'").prop("checked")';
+        $valueOFF = '$("#'.$name.'").removeProp("checked")';
+        $disabled = '$("#'.$name.'").attr("disabled", "disabled")';
+        $wrapperElement = '<br/><input '.$this->html->attributes($optionsField).' name="'.$name.'" type="checkbox" >
+        <script>
+        $(function() {
+            $("#'.$name.'").bootstrapToggle({
+                on: "'.$setting['on'].'",
+                off: "'.$setting['off'].'"
+            });
+            $("#'.$name.'").bootstrapToggle("'.strtolower($value) .'");
+            '. (strtolower($value) == 'on' ? $valueON : $valueOFF ) .'
+            '.(isset($setting['disabled']) && $setting['disabled'] == 'disabled' ?$disabled : '') .'
+        })
+        </script>';
+        return $this->isAllowed($name) ?  $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+    }
+
 }
