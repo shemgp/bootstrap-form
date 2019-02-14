@@ -121,6 +121,22 @@ class SelectizeFormTest extends PHPUnit_Extensions_Selenium2TestCase
         return strip_tags($this->source());
     }
 
+    private function doMultipleFormEnterValueTest($subfolder, $names, $value)
+    {
+        $this->url('http://'.$this->hostname.'/'.$subfolder.'/index.php');
+        sleep(1);
+        foreach($names as $name)
+        {
+            $element = $this->byCssSelector('#'.$name.' + div');
+            $element->click();
+            $this->keys($value."\n");
+        }
+        $this->execute(['script' => '$("#go").focus();', 'args' => []]);
+        $this->clickOnElement('go');
+
+        return strip_tags($this->source());
+    }
+
     private function doCreateValueTest($subfolder, $name, $value)
     {
         $this->url('http://'.$this->hostname.'/'.$subfolder.'/index.php');
@@ -320,4 +336,21 @@ class SelectizeFormTest extends PHPUnit_Extensions_Selenium2TestCase
 
         $this->assertEquals(['test' => ['new', 'york']], json_decode($return, true));
     }
+
+    /** @test */
+    public function testMultipleSelectizeWithAjax()
+    {
+        $subfolder = __FUNCTION__;
+
+        $selectize = $this->bootstrapForm->sselectize('test_id', [], null, ['url' => 'http://'.$this->hostname.'/'.$subfolder.'/ajax.php'])
+        .$this->bootstrapForm->sselectize('test2_id', [], null, ['url' => 'http://'.$this->hostname.'/'.$subfolder.'/ajax.php']);
+
+        $this->setupIndex($subfolder, $selectize);
+        $this->setupAjaxReturn([["id" => 1, "name" => "test"]]);
+        $this->setupSubmit();
+        $return = $this->doMultipleFormEnterValueTest($subfolder, ['test_id', 'test2_id'], 'test');
+
+        $this->assertEquals(['test_id' => 1, 'test2_id' => 1], json_decode($return, true));
+    }
+
 }
