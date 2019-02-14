@@ -87,6 +87,13 @@ class BootstrapForm
 
 
     /**
+     * guessed model
+     *
+     * @var object
+     */
+    protected $model;
+
+    /**
      * Construct the class.
      *
      * @param  \Collective\Html\HtmlBuilder             $html
@@ -233,7 +240,8 @@ class BootstrapForm
     {
         $this->setType(Type::VERTICAL);
         $options = array_merge($options, ['class' => "form-vertical"]);
-        return $this->open($options);    }
+        return $this->open($options);
+    }
 
     /**
      * Open an inline Bootstrap form.
@@ -290,7 +298,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
     /**
@@ -322,7 +330,7 @@ class BootstrapForm
     {
         unset($options['id']);
         $options = array_merge($options, ['id' => $name]);
-        return $this->isAllowed($name) ? $this->input('email', $name, $label, $value, $options) : ""; 
+        return $this->isAllowed($name) ? $this->input('email', $name, $label, $value, $options) : "";
     }
 
     /**
@@ -338,7 +346,7 @@ class BootstrapForm
     {
         unset($options['id']);
         $options = array_merge($options, ['id' => $name]);
-        return $this->isAllowed($name) ? $this->input('url', $name, $label, $value, $options) : ""; 
+        return $this->isAllowed($name) ? $this->input('url', $name, $label, $value, $options) : "";
     }
 
     /**
@@ -355,7 +363,7 @@ class BootstrapForm
         unset($options['id']);
         $options = array_merge($options, ['id' => $name]);
 
-        return $this->isAllowed($name) ? $this->input('tel', $name, $label, $value, $options) : ""; 
+        return $this->isAllowed($name) ? $this->input('tel', $name, $label, $value, $options) : "";
     }
 
     /**
@@ -372,7 +380,7 @@ class BootstrapForm
         unset($options['id']);
         $options = array_merge($options, ['id' => $name]);
 
-        return $this->isAllowed($name) ? $this->input('number', $name, $label, $value, $options) : ""; 
+        return $this->isAllowed($name) ? $this->input('number', $name, $label, $value, $options) : "";
     }
 
     /**
@@ -389,7 +397,7 @@ class BootstrapForm
         unset($options['id']);
         $options = array_merge($options, ['id' => $name]);
 
-        return $this->isAllowed($name) ? $this->input('date', $name, $label, $value, $options) : ""; 
+        return $this->isAllowed($name) ? $this->input('date', $name, $label, $value, $options) : "";
     }
 
      /**
@@ -405,7 +413,7 @@ class BootstrapForm
     {
         unset($options['id']);
         $options = array_merge($options, ['id' => $name]);
-        return $this->isAllowed($name) ? $this->input('time', $name, $label, $value, $options) : ""; 
+        return $this->isAllowed($name) ? $this->input('time', $name, $label, $value, $options) : "";
     }
 
     /**
@@ -421,7 +429,7 @@ class BootstrapForm
     {
         unset($options['id']);
         $options = array_merge($options, ['id' => $name]);
-        return $this->isAllowed($name) ? $this->input('textarea', $name, $label, $value, $options) : ""; 
+        return $this->isAllowed($name) ? $this->input('textarea', $name, $label, $value, $options) : "";
     }
 
     /**
@@ -436,7 +444,7 @@ class BootstrapForm
     {
         unset($options['id']);
         $options = array_merge($options, ['id' => $name]);
-        return $this->isAllowed($name) ? $this->input('password', $name, $label, null, $options) : ""; 
+        return $this->isAllowed($name) ? $this->input('password', $name, $label, null, $options) : "";
     }
 
     /**
@@ -458,7 +466,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => implode(' ', [$this->getLeftColumnOffsetClass(), $this->getRightColumnClass()])] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->isAllowed($name) ? $this->getFormGroup($name, null, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup($name, null, $wrapperElement) : "";
     }
 
     /**
@@ -533,7 +541,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => implode(' ', [$this->getLeftColumnOffsetClass(), $this->getRightColumnClass()])] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . '</div>';
 
-        return $this->isAllowed($name) ? $this->getFormGroup(null, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup(null, $label, $wrapperElement) : "";
     }
 
     /**
@@ -587,7 +595,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
         $wrapperElement = '<div class="animated-radio-button"' . $this->html->attributes($wrapperOptions) . '>' . $elements . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
     /**
@@ -634,7 +642,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => implode(' ', [$this->getLeftColumnOffsetClass(), $this->getRightColumnClass()])] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>'. $inputElement . '</div>';
 
-        return $this->isAllowed($name) ? $this->getFormGroup(null, null, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup(null, null, $wrapperElement) : "";
     }
 
     /**
@@ -656,7 +664,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => implode(' ', [$this->getLeftColumnOffsetClass(), $this->getRightColumnClass()])] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>'. $inputElement . '</div>';
 
-        return $this->isAllowed($name) ? $this->getFormGroup(null, null, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup(null, null, $wrapperElement) : "";
     }
 
     /**
@@ -682,7 +690,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
     /**
@@ -802,7 +810,7 @@ class BootstrapForm
         $wrapperOptions = $this->isHorizontal() ? ['class' => $this->getRightColumnClass()] : [];
         $wrapperElement = '<div' . $this->html->attributes($wrapperOptions) . '>' . $inputElement . $this->getFieldError($name) . $this->getHelpText($name, $options) . '</div>';
 
-        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
     /**
@@ -1192,7 +1200,7 @@ class BootstrapForm
             })
         </script>
         ';
-        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
     // can have multiple selection
@@ -1217,7 +1225,7 @@ class BootstrapForm
             })
             </script>
         ';
-        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
     // list is from route
@@ -1275,7 +1283,7 @@ class BootstrapForm
             })
             </script>
         ';
-        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
     public function toggle($name, $label = null, $value = null, $options = [], $setting = [ 'off' => 'Off', 'on' => 'On']) {
@@ -1298,7 +1306,7 @@ class BootstrapForm
             '.(isset($setting['disabled']) && $setting['disabled'] == 'disabled' ?$disabled : '') .'
         })
         </script>';
-        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ? $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
     public function toggleFlip($name, $label = null, $value = null, $options = [], $setting = [ 'off' => 'Off', 'on' => 'On']) {
@@ -1321,7 +1329,566 @@ class BootstrapForm
             '.(isset($setting['disabled']) && $setting['disabled'] == 'disabled' ?$disabled : '') .'
         })
         </script>';
-        return $this->isAllowed($name) ?  $this->getFormGroup($name, $label, $wrapperElement) : ""; 
+        return $this->isAllowed($name) ?  $this->getFormGroup($name, $label, $wrapperElement) : "";
     }
 
+
+    /**
+     * Select like dropdown using selectize
+     * @param  string $name       Name of element
+     * @param  array  $list       selection list, null if ajax
+     * @param  string $selected   initial value
+     * @param  array  $options    options
+     * @return string             HTML code to display the selectize data
+     */
+    function sselectize ($name, $list = [], $selected = null, $options = []) {
+        $selectize_loaded = $_SERVER['sselectize']['selectize_loaded']??false;
+
+        $table = null;
+        $field = null;
+        if (isset($options['from']))    // from: $table.$field short syntax
+        {
+            $from_exploded = explode('.', $options['from']);
+            if (count($from_exploded) >= 2)
+            {
+                $from_exploded = array_reverse($from_exploded);
+                $table = $from_exploded[1];
+                $field = $from_exploded[0];
+            }
+            else
+                $table = $from;
+        }
+
+        $type = isset($options['type']) ? $options['type'] : 'select';
+        $table = isset($options['table']) ? $options['table'] : ($table ? $table : null);
+        $field = isset($options['field']) ? $options['field'] : ($field ? $field : 'name');
+        $create = isset($options['create']) && ($options['create'] !== false && $options['create'] !== 'false') ? 'true' : 'false';
+        $multiple = isset($options['multiple']) && ($options['multiple'] !== false && $options['multiple'] !== 'false') ? (ctype_digit($options['multiple'])?$options['multiple']:'null') : '1';
+        $js_options = isset($options['js_options']) && count($options['js_options']??[]) > 0 ? $options['js_options'] : null;
+        $js_attach = isset($options['js_attach']) ? $options['js_attach'] : null;
+        $except = isset($options['except']) ? $options['except'] : [];
+        $input_width = isset($options['input_width']) ? $options['input_width'] : '30';
+        $js_render = $options['js_render'] ?? null;
+        $all_data = isset($options['all_data']) && $options['all_data'] == true ? true : false;
+
+        $model = isset($options['model']) ? $options['model'] : null;
+        $url = isset($options['url']) ? $options['url'] : null;
+        $textarea_full = isset($options['textarea_full']) ? $options['textarea_full'] : false;
+        $attributes = $options['attributes']??[];
+        if ($multiple != 1)
+            $attributes['multiple'] = 'required';
+        $placeholder = isset($attributes['placeholder']) ? $attributes['placeholder'] : null;
+        $preload = isset($options['preload']) && ($options['preload'] === false || $options['preload'] == 'false') ? 'false' : (!isset($options['preload']) ? 'false' : 'true' );
+        $limit = isset($options['limit']) ? $options['limit'] : 10;
+        $order_field = isset($options['order_field']) ? $options['order_field'] : $field;
+        $order_by = isset($options['order_by']) ? $options['order_by'] : 'asc';
+
+        // use plural(name)_id to get table when it's not set
+        if (!$table && preg_match('/_id$/', $name) && class_exists('Schema'))
+        {
+            $temp_table = str_plural(preg_replace('/_id[\[\]]*/', '', $name));
+            if (Schema::hasTable($temp_table))
+                $table = $temp_table;
+            else if (Schema::hasTable(str_plural($temp_table)))
+                $table = str_plural($temp_table);
+        }
+
+        // guess table from name
+        else if (!$table)
+        {
+            // guess model based on current controller to get start of table name
+            $this_model = null;
+            if ($this->model)
+            {
+                $this_model = $this->model;
+            }
+            else if (class_exists('Request'))
+            {
+                $controller_action = Request::route()->getAction()['controller'];
+                $name_stripped = preg_replace('/Controller@[a-z]*$/', '', $controller_action);
+                $name_stripped = preg_replace('/^.*Controllers\\\\/', '', $name_stripped);
+                $try_model = 'App\\Models\\'.$name_stripped;
+                if (class_exists($try_model))
+                    $model_name = $try_model;
+                else
+                {
+                    $try_model = 'App\\Models\\'.substr($name_stripped, strrpos($name_stripped, '\\') + 1);
+                    if (class_exists($try_model))
+                        $model_name = $try_model;
+                }
+                if (isset($model_name))
+                    $this_model = new $model_name();
+            }
+
+            if ($this_model)
+            {
+                // guess table from dot syntax name
+                $from = $name;
+                $last_table = $this_model->getTable();
+                foreach(explode('.', $from) as $table)
+                {
+                    if (Schema::hasTable($table))
+                        $last_table = $table;
+                    else if (Schema::hasTable(str_plural($table)))
+                        $last_table = str_plural($table);
+                    else
+                    {
+                        if ($field == null)
+                            $field = $table;
+                        break;
+                    }
+                }
+                $table = $last_table;
+            }
+        }
+
+        // get route from tablename
+        if (!$url && class_exists('Route'))
+        {
+            $url = '';
+            $regex_route = '/'.$table.'\\/list$/';
+            $regex_route_camel_case = '/'.camel_case($table).'\\/list$/';
+            $regex_route_dashed = '/'.str_replace('_', '-', $table).'\\/list$/';
+            $route_collection = Route::getRoutes();
+            foreach ($route_collection as $route)
+            {
+                if (preg_match($regex_route, $route->uri())
+                    || preg_match($regex_route_camel_case, $route->uri())
+                    || preg_match($regex_route_dashed, $route->uri()))
+                {
+                    $url = '/'.$route->uri();
+                    $url = config('app.url').$url;
+                    break;
+                }
+            }
+        }
+
+        // add js options
+        $add_js = '';
+        if ($js_options)
+            foreach($js_options as $json_field => $code)
+                $add_js .= ",\n".$json_field. ': '.$code;
+
+        // it has <options>, use id (see below)
+        $has_options = is_array($list) && count($list) > 0;
+
+        // if _id or has_options or is multiple then use
+        $key = isset($options['key']) ? $options['key'] : (preg_match('/_id[\[\]]*/', $name) || $has_options || $multiple != 1 || !$create ? 'id' : $field);
+
+        // set display
+        // Note: when it has url it's using ajax so get the field value,
+        // else it's using <options> so get the "value" attribute
+        if ($multiple != '1' || $url)
+            $display = isset($options['display']) ? $options['display'] : $field;
+        else
+            $display = isset($options['display']) ? $options['display'] : 'value';
+
+        // set default options
+        $options = $list;
+        if ($selected)
+            $selected_value = $selected;
+        else
+            $selected_value = $this->form->getValueAttribute($name, null);
+
+        $selected_text = null;
+
+        if ($selected_value && $table)
+        {
+            if ($table == 'users')
+                $model = new \App\User;
+
+            // guess model from table name
+            if ($model !== null)
+            {
+                $model = new $model();
+            }
+            else
+            {
+                $from_model = null;
+                $tmp_model_start = '\\App\\Models\\';
+                $tmp_model_class = studly_case(str_singular($table ?? ''));
+                if (class_exists($tmp_model_start.$tmp_model_class))
+                {
+                    $tmp_model = $tmp_model_start.$tmp_model_class;
+                    $from_model = $tmp_model;
+                }
+                else
+                {
+                    // try to find inside folders
+                    $regex_route = '/'.$table.'$/';
+                    $route_collection = Route::getRoutes();
+                    foreach ($route_collection as $route)
+                    {
+                        if (preg_match($regex_route, $route->uri()))
+                        {
+                            $guess_model_path = preg_replace("/(.*[\..]*)(".$table."[\\..]*.*)/", "$1", $route->getName());
+                            $guess_model = $tmp_model_start.str_replace('.', '\\', studly_case($guess_model_path)).$tmp_model_class;
+                            if (class_exists($guess_model))
+                                $from_model = $guess_model;
+                            break;
+                        }
+                    }
+                }
+
+                // can't find eloquent model, just use builder
+                // and accessors and mutators won't work
+                if ($from_model)
+                {
+                    $model = new $from_model();
+                }
+                else
+                {
+                    $model = DB::table($table);
+                }
+            }
+
+            if (ctype_digit(trim($selected_value)))
+            {
+
+                // README: if the error is can't find accessor column,
+                //         it probably is because it went to DB::table above,
+                //         where accessors won't work.
+                //         So just specify the correct model and it'll work.
+                $tmp_selected_text = $model->get()->where($key, (int) $selected_value)->first();
+
+                if ($tmp_selected_text)
+                {
+                    $selected_text = $tmp_selected_text->{$field};
+                }
+                else
+                {
+                    $selected_text = $selected_value;
+                }
+            }
+            else
+            {
+                $selected_text = $model->get()->where($field, $selected_value)->first();
+                if ($selected_text)
+                {
+                    $selected_value = $selected_text->id;
+                    $selected_text = $selected_text->{$field};
+                }
+                else
+                    $selected_text = $selected_value;
+            }
+            $options = [$selected_value => $selected_text];
+        }
+        else if (trim($this->form->getValueAttribute($name)) != '')
+        {
+            $selected_value = $this->form->getValueAttribute($name);
+        }
+
+        // set default option when not using select
+        $id_set = true;
+        if (!isset($attributes['id']))
+        {
+            $tmp_name = preg_replace('/[\[\]]/', '_', $name);
+            $attributes['id'] = str_replace('.', '_', $tmp_name);
+            $id_set = false;
+        }
+        $slashed_id = str_replace('.', '\\\\.', $attributes['id']);
+
+        $element_name = $name;
+        $element_value = $selected_value;
+        $has_separate_hidden = false;
+        $output = '';
+        // if id was not set then use a different name for widget/control
+        if (!$id_set && $type != 'select' && ($key != $field || strpos($name, '.') !== false))
+        {
+            $tmp_name = preg_replace('/[\[\]]/', '_', $name);
+            $different_id = str_replace('.', '-', $tmp_name).'_selectize';
+            // create hidden element with original name
+            if ($type === 'textarea')
+                $output .= Form::textarea($name, $selected_value, ['id' => $different_id, 'style' => 'display:none']);
+            else
+                $output .= Form::hidden($name, $selected_value, ['id' => $different_id]);
+
+            //  and use a different name for the widget/control
+            $element_name = $different_id;
+            if ($selected_value)
+                $element_value = $options[$selected_value]??null;
+            $has_separate_hidden = true;
+        }
+        else
+        {
+            $tmp_name = preg_replace('/[\[\]]/', '_', $element_name);
+            $attributes['id'] = $tmp_name;
+            $different_id = str_replace('.', '-', $tmp_name);
+        }
+        switch ($type)
+        {
+            case 'select':
+                $output .= $this->form->select($element_name, $options, $selected_value, $attributes);
+            break;
+            case 'text':
+                $output .= $this->form->text($element_name, $element_value, $attributes);
+            break;
+            case 'password':
+                $output .= $this->form->input('password', $element_name, $element_value, $attributes);
+            break;
+            case 'textarea':
+                $output .= $this->form->textarea($element_name, $element_value, $attributes);
+            break;
+        }
+        if ($type !== 'textarea')
+        {
+            $output .= (!$selectize_loaded ? '<script src="'.asset('/bower_components/selectize/dist/js/standalone/selectize.js').'"></script>' : '');
+            $outputs = '';
+            $output .= '<script>
+                '.(!$has_options?'
+                if ("'. $url .'" == "")
+                    console.log("Warning: URL is empty. Maybe you don\'t have '. $table .'/list route?");
+                ':'').'
+                var '.$slashed_id.'_data = [];
+                var select = $("#'.$slashed_id.'").selectize({
+                    persist: true,
+                    valueField: "'.$key.'",
+                    labelField: "'.$display.'",
+                    searchField: "'.$field.'",
+                    create: '.$create.',
+                    maxItems: '.$multiple.','.
+                    ($placeholder? '
+                    placeholder: "'.$placeholder."\",\n" : '').'
+                    createOnBlur: true,
+                    openOnFocus: true,
+                    preload: '.$preload.',
+                    render: {
+                        option: function(item, escape) {
+                            '.$slashed_id.'_data.push(item);'.
+                            ($js_render ?
+                                'return '.$js_render :
+                                'return "<div>"+escape(item.'.$field.')+"</div>"'
+                            ).';
+                        }
+                    },
+                    load: function (query, callback) {
+                        if ("'.$url.'" == "")
+                            return true;
+                        var self = this;
+                        var search="'.$field.'";
+                        if (!$("#'.$slashed_id.'").data("inited_already"))
+                            search="'.$key.'";
+                        $.when( $.ajax({
+                            url: "'.$url.'?search="+search+"&field='.$field.($add_js!=''||$all_data?'&all_data=1':'').'",
+                            type: "GET",
+                            data: {
+                                except: ['.join(",", $except).'],
+                                "query": query,
+                                page_limit: 10
+                            },
+                            error: function() {
+                                callback();
+                            },
+                            success: function(res) {
+                                res = JSON.parse(res);
+                                callback(res.results);
+                            },
+                        }) ).then (function () {
+                            if (!$("#'.$slashed_id.'").data("inited_already"))
+                            {
+                                $("#'.$slashed_id.'").data("inited_already", true);
+                                self.setValue(["'.(is_array($selected_value)?join('", "',$selected_value):$selected_value).'"], true);
+                            }
+                        });
+                    },
+                    onInitialize: function () {
+                        $(this)[0].onSearchChange("'.(is_array($selected_value)?join('", "',$selected_value):$selected_value).'");
+                    },
+                    onItemAdd: function (event, item) {
+                        text = $(item).text();
+                        all_data = '.$slashed_id.'_data;
+                        data = null;
+                        for(i=0; i < all_data.length; ++i)
+                        {
+                            if (all_data[i].'.$display.' == text)
+                                data = all_data[i];
+                        }
+                        if (data)
+                            $("#'.$slashed_id.'").trigger("item_add", data);
+                    }
+                    '.
+                    $add_js.
+                '})
+                '.$js_attach;
+                if ($has_separate_hidden)
+                {
+                    $output .= '.on("change", function (value) {
+                            $("#'.$different_id.'").val($("#'.$slashed_id.'").val());
+                        });'."\n";
+                }
+                else
+                {
+                    $output .= ';'."\n";
+                }
+                $output .= (!$selectize_loaded ? 'head.load("'.asset('/bower_components/selectize/dist/css/selectize.bootstrap3.css').'");' : '')."\n";
+                $output .= (!$selectize_loaded ? 'head.load("'.asset('/css/selectize.css').'");' : '')."\n";
+                $tabs = '$(function () {
+                        $(":input").filter(function () {
+                            if (this.id != "")
+                                return this.id.match(/selectized$/);
+                            return false;
+                        }).on("keydown", function (e) {
+                            var keyCode = e.keyCode || e.which;
+
+                            if (keyCode == 9) {
+                                e.preventDefault();
+                                var inputs = $("div.selectize-control.form-control,:input:not(.selectized):not([type=hidden])").filter(":visible").filter(function () {
+                                    if (this.id != "")
+                                        return !this.id.match(/selectized$/);
+                                    if (this.class != "")
+                                        return !this.id.match(/ui-datepicker/);
+                                    return true;
+                                });
+                                if (!e.shiftKey)
+                                    add_to_index = 1;
+                                else
+                                    add_to_index = -1;
+
+                                var tab_to = null;
+                                for (i=0; i<inputs.length; ++i)
+                                {
+                                    if ($(e.target).parents(".form-control")[0] == inputs[i])
+                                    {
+                                        tab_to_index = i + add_to_index;
+                                        if (tab_to_index >= inputs.length)
+                                            tab_to = inputs[0];
+                                        else if(tab_to_index < 0)
+                                            tab_to = inputs[inputs.length - 1];
+                                        else
+                                            tab_to = inputs[tab_to_index];
+                                        break;
+                                    }
+                                }
+                                if ($(tab_to).is(":input"))
+                                    $(tab_to).focus();
+                                else
+                                    $(tab_to).find(":input").focus();
+                            }
+                        });
+                    });
+                ';
+                $output .= (!$selectize_loaded)?$tabs:'';
+            $output .= '</script>';
+            $_SERVER['sselectize']['selectize_loaded'] = true;
+        }
+        else
+        {
+            if ($textarea_full)
+            {
+                $jquery_autocomplete_loaded = Request::get('jquery_autocomplete_loaded', false);
+                $output .= (!$jquery_autocomplete_loaded ? '<script src="'.asset('/bower_components/jquery-auto-complete/jquery.auto-complete.js').'"></script>' : '');
+                $output .= '<script>
+                    if ("'. $url .'" == "")
+                        console.log("Warning: URL is empty. Maybe you don\'t have '. $table .'/list route?");
+                    var xhr_'.$attributes['id'].';
+                    $("#'.$slashed_id.'").autoComplete({
+                        minChars: 0,
+                        cache: false,'
+                        ($placeholder? ' placeholder: "'.$placeholder."\",\n" : '').
+                        'source: function (term, response) {
+                            try { xhr_'.$attributes['id'].'.abort(); } catch (e) {};
+                            xhr_'.$attributes['id'].' = $.getJSON(
+                                "'.$url.'?field='.$field.($add_js!=''?'&all_data=1':'').'",
+                                { query: term ,
+                                    limit: '.$limit.'
+                                },
+                                function (data) {
+                                    results = data.results;
+                                    response(results);
+                                }
+                            );
+                        },
+                        renderItem: function (item, search){
+                            search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, \'\\$&\');
+                            var re = new RegExp("(" + search.split(\' \').join(\'|\') + ")", "gi");
+                            return "<div class=\"autocomplete-suggestion\" data-key=\""+item.'.$key.'+"\"><pre class=\"bash hljs\">" + item.'.$field.' + "</pre></div>";
+                        }';
+                        $output .= $add_js;
+                        $output .= ",\n".'onSelect: function (e, term, item) {
+                                data_key = $(item).attr("data-key");
+                                if (data_key)
+                                    $("#'.$name.'").val(data_key);
+                                else
+                                    $("#'.$name.'").val(item.text());
+
+                                $("#'.$attributes['id'].'").val(item.text());
+                            }'."\n";
+                    $output .= '});';
+                    if ($has_separate_hidden)
+                    {
+                        $output .= '$("#'.$slashed_id.'").on("keyup", function () {
+                            $("#'.$different_id.'").text($("#'.$slashed_id.'").val());
+                        });';
+                    }
+                    $output .= (!$jquery_autocomplete_loaded ? 'head.load("'.asset('/bower_components/jquery-auto-complete/jquery.auto-complete.css').'");' : '')."\n";
+                    $output .= (!$jquery_autocomplete_loaded ? 'head.load("'.asset('/css/selectize.css').'");' : '')."\n";
+                    $output .= (!$jquery_autocomplete_loaded ? 'head.load("'.asset('/bower_components/highlightjs/styles/default.css').'");' : '')."\n";
+                    $output .= (!$jquery_autocomplete_loaded ? 'head.load("'.asset('/bower_components/highlightjs/highlight.pack.min.js').'");' : '')."\n";
+                    $output .= '$(function () {
+                        $("pre").each(function(i, block) {
+                            hljs.highlightBlock(block);
+                        });
+                    });';
+                $output .= '</script>';
+                Request::merge(['jquery_autocomplete_loaded' => true]);
+            }
+            else
+            {
+                $jquery_textcomplete_loaded= Request::get('jquery_textcomplete_loaded', false);
+                $output .= '<script>
+                head.load("'.asset('/bower_components/jquery-textcomplete/dist/jquery.textcomplete.js').'", function () {
+                    var elements = ["span", "div", "h1", "h2", "h3"];
+                    $("#'.$slashed_id.'").textcomplete([{
+                        match: /.*(.{1,}).*$/g,
+                        cache: true,
+                        index: 0,
+                        search: function (term, callback, match) {
+                            $.getJSON("'.$url.'", { query: term, field: "'.$field.'" })
+                                .done(function (resp) {
+                                    lines = [];
+                                    for(i=0; i < resp.results.length; ++i)
+                                    {
+                                        db_lines = resp.results[i].text.split("\\\\n");
+                                        trimmed_db_lines = [];
+                                        for (c=0; c < db_lines.length; ++c)
+                                        {
+                                            if (db_lines[c].trim().indexOf(term) != -1)
+                                                lines.push(db_lines[c].trim());
+                                        }
+                                    }
+                                    prev_term = "";
+                                    callback(lines);
+                                })
+                                .fail(function () {
+                                    callback([]);
+                                });
+                        },
+                        replace: function (value) {
+                            return value;
+                        },
+                    }],
+                    {
+                        debounce: 250,
+                        onKeydown: function (e, commands) {
+                            if (e.ctrlKey && e.keyCode === 74) { // CTRL-J
+                                return commands.KEY_ENTER;
+                            }
+                        }
+                    });'."\n";
+                    if ($has_separate_hidden)
+                    {
+                        $output .= '$("#'.$slashed_id.'").on("keyup change", function () {
+                            $("#'.$different_id.'").text($("#'.$slashed_id.'").val());
+                        });';
+                        $output .= '$("#'.$different_id.'").on("keyup change", function () {
+                            $("#'.$slashed_id.'").text($("#'.$different_id.'").val());
+                        });';
+                    }
+                $output .= "\n".'});</script>';
+                Request::merge(['jquery_textcomplete_loaded' => true]);
+            }
+        }
+
+        return $output;
+    }
 }

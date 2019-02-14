@@ -1,8 +1,10 @@
 <?php
 
 use Watson\BootstrapForm\BootstrapForm;
+use PHPUnit\Framework\TestCase;
+use Collective\Html\FormBuilder;
 
-class BootstrapFormTest extends PHPUnit_Framework_TestCase
+class BootstrapFormTest extends TestCase
 {
     protected $bootstrapForm;
 
@@ -117,7 +119,7 @@ class BootstrapFormTest extends PHPUnit_Framework_TestCase
         $this->formBuidlerMock->shouldReceive('open')
             ->with([
                 'role' => 'form',
-                'class' => '',
+                'class' => 'form-vertical',
             ])
             ->once()
             ->andReturn('foo');
@@ -192,7 +194,7 @@ class BootstrapFormTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo.bar', $result);
     }
-    
+
     /** @test */
     public function in_allows_zero_in_field_name()
     {
