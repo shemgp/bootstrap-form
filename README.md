@@ -257,3 +257,13 @@ Add prefix and/or suffix to any input - you can add text, icon and buttons.
 // Prefix and suffix with button
 {!! BootForm::text('tel', 'Phone', null, ['suffix' => BootForm::addonButton('Boom!', ['class' => 'btn-danger']), 'prefix' => BootForm::addonButton('Call', ['class' => 'btn-success'])] ) !!}
 ```
+
+## How to test
+
+Example run:
+
+```shell
+COMPOSER=tests.composer.json composer update --dev
+java -jar ~/Downloads/seleni-server-standalone-3.141.59.jar
+vendor/bin/phpunit
+```

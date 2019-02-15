@@ -24,6 +24,12 @@
         "illuminate/support": "~5.0",
         "laravelcollective/html": "~5.0"
     },
+    "require-dev": {
+	"phpunit/phpunit-selenium": "*",
+	"facebook/webdriver": "*",
+        "phpunit/phpunit": "~4.6",
+        "mockery/mockery": "0.9.*"
+    },
     "autoload": {
         "psr-4": {
             "Watson\\BootstrapForm\\": "src/"
