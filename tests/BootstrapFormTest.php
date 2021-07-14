@@ -2,7 +2,13 @@
 
 use Watson\BootstrapForm\BootstrapForm;
 
-class BootstrapFormTest extends PHPUnit_Framework_TestCase
+use Collective\Html\FormBuilder;
+use Collective\Html\HtmlBuilder;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Eloquent\Database\Model;
+use PHPUnit\Framework\TestCase;
+
+class BootstrapFormTest extends TestCase
 {
     protected $bootstrapForm;
 
@@ -12,20 +18,16 @@ class BootstrapFormTest extends PHPUnit_Framework_TestCase
 
     protected $configMock;
 
-    protected $sessionMock;
-
-    public function setUp()
+    public function setUp(): void
     {
-        $this->htmlBuilderMock = Mockery::mock('Collective\Html\HtmlBuilder');
-        $this->formBuidlerMock = Mockery::mock('Collective\Html\FormBuilder');
-        $this->configMock = Mockery::mock('Illuminate\Contracts\Config\Repository')->shouldDeferMissing();
-        $this->sessionMock = Mockery::mock('Illuminate\Session\SessionManager')->shouldDeferMissing();
+        $this->htmlBuilderMock = Mockery::mock(HtmlBuilder::class);
+        $this->formBuidlerMock = Mockery::mock(FormBuilder::class);
+        $this->configMock = Mockery::mock(Repository::class)->shouldDeferMissing();
 
         $this->bootstrapForm = new BootstrapForm(
             $this->htmlBuilderMock,
             $this->formBuidlerMock,
             $this->configMock,
-            $this->sessionMock
         );
     }
 
@@ -50,7 +52,7 @@ class BootstrapFormTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_opens_store_model_form()
     {
-        $model = Mockery::mock('Illuminate\Database\Eloquent\Model');
+        $model = Mockery::mock(Model::class);
         $model->exists = false;
 
         $this->formBuidlerMock->shouldReceive('model')
@@ -80,7 +82,7 @@ class BootstrapFormTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_opens_update_model_form()
     {
-        $model = Mockery::mock('Illuminate\Database\Eloquent\Model');
+        $model = Mockery::mock(Model::class);
         $model->exists = true;
 
         $model->shouldReceive('getRouteKey')
@@ -192,7 +194,7 @@ class BootstrapFormTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo.bar', $result);
     }
-    
+
     /** @test */
     public function in_allows_zero_in_field_name()
     {
